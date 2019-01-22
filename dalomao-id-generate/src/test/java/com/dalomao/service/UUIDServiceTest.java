@@ -16,7 +16,7 @@ import java.util.concurrent.CountDownLatch;
 @ContextConfiguration(locations = { "classpath:spring.xml" })
 public class UUIDServiceTest {
 
-    private static final int threadNum = 100;
+    private static final int threadNum = 1000;
 
     // 线程同步工具
     private static CountDownLatch cdl = new CountDownLatch(threadNum); // 100 -1 =99 - 98 --- =0
