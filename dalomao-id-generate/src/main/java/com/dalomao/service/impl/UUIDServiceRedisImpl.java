@@ -24,7 +24,14 @@ public class UUIDServiceRedisImpl implements IUUIDService{
 
     private DateFormat df = new SimpleDateFormat("yyyyMMdd");
 
-
+    /**
+     * 指定长度生成主键
+     * 根据业务场景传入不同长度，这里不保证长度超出的结果
+     * 主键长度越长，越适合并发的场景
+     *
+     * @param length 主键长度
+     * @return 8位yyyyMMdd + redis当天自增数左补齐0
+     */
     public String generateId(int length) {
         if (length < 10) {
             throw new RuntimeException("生成的主键长度不能少于10");

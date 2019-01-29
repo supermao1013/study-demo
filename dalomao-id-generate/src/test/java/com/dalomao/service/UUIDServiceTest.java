@@ -1,5 +1,6 @@
 package com.dalomao.service;
 
+import com.dalomao.util.CustomIdUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,9 @@ public class UUIDServiceTest {
     private static CountDownLatch cdl = new CountDownLatch(threadNum); // 100 -1 =99 - 98 --- =0
 
     @Autowired
-    @Qualifier("uuidServiceRedisImpl")
+//    @Qualifier("uuidServiceRedisImpl")
+//    @Qualifier("uuidServiceSnowflakeImpl")
+    @Qualifier("uuidServiceUUIDImpl")
     private IUUIDService uuidService;
 
     @Test
@@ -44,7 +47,8 @@ public class UUIDServiceTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(uuidService.generateId());
+//            System.out.println(uuidService.generateId());
+            System.out.println(CustomIdUtils.getId());
         }
     }
 }
