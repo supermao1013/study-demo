@@ -11,5 +11,6 @@ Java多线程的一些demo，包括基础知识、原子类、synchronized、vol
 * forkjoin：Fork/Join框架，众所周知，工作窃取算法
 * pipeline：线程间通过管道通信的小demo
 * pool：线程池的使用，包括future、ScheduledThreadPoolExecutor、CompletionService等类的使用
+* deadlock：死锁的一些情况
 
 
