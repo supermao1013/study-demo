@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %X{username} - %X{logSerial} - %X{serial} - %msg%n" />
+
+    <!-- 配置：控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+            <!-- Formatted output: %d:timestamp,%thread:thread name, %-5level: Level，%msg:log message -->
+            <!-- 格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%msg：日志消息，%n是换行符 -->
+            <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+            <pattern>${logPattern}</pattern>
+        </layout>
+    </appender>
+
+
+
+    <!-- 系统操作日志输出到 -->
+    <root level="${logLevel}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!--屏蔽不需要的日志信息-->
+    <logger name="org.springframework" level="INFO"/>
+</configuration>
