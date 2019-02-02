@@ -13,9 +13,6 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 /**
  * 
- * @author Five老师
- * @createTime 2018年3月25日 下午10:03:52
- * 
  */
 public class MessageProcessor {
 

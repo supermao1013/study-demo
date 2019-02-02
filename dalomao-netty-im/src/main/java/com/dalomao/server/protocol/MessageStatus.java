@@ -1,9 +1,6 @@
 package com.dalomao.server.protocol;
 /**
- * 
- * @author Kevin老师
- * @createTime 2018年3月27日 下午8:23:31
- * 
+ * 消息状态，自定义的消息头
  */
 public class MessageStatus {
 

@@ -12,16 +12,15 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
- * 
- * @author Kevin老师
- * @createTime 2018年3月27日 下午9:27:57
- * 
+ * 聊天室客户端
  */
 public class ChatClient {
+
 	public static void main(String[] args) throws Exception {
-		int port=8080; //服务端默认端口
+		int port = 8080; //服务端默认端口
 		new ChatClient().connect(port, "localhost");
 	}
+
 	public void connect(int port, String host) throws Exception{
 		//配置客户端NIO线程组
 		EventLoopGroup group = new NioEventLoopGroup();

@@ -4,9 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 
- * @author Five老师
- * @createTime 2018年3月25日 下午10:23:46
  * 消息编解码
  */
 public class MessageCodec {

@@ -9,10 +9,7 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
- * 
- * @author Kevin老师
- * @createTime 2018年3月27日 下午9:29:19
- * 
+ * 客户端处理
  */
 public class ChatClientHandler extends ChannelHandlerAdapter {
 	private Channel client;

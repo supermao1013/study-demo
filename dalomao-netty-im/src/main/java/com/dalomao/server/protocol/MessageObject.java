@@ -4,9 +4,6 @@ import org.msgpack.annotation.Message;
 
 /**
  * 
- * @author Five老师
- * @createTime 2018年3月25日 下午10:24:29
- * 
  */
 @Message
 public class MessageObject {

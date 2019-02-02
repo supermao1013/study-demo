@@ -22,15 +22,12 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
- * 
- * @author Five老师
- * @createTime 2018年3月25日 下午8:05:54
- * 
+ * 聊天室服务端
  */
 public class ChatServer {
 
 	public static void main(String[] args) throws Exception {
-		int port=8080; //服务端默认端口
+		int port = 8080; //服务端默认端口
 		new ChatServer().bind(port);
 	}
 	
@@ -53,13 +50,10 @@ public class ChatServer {
 					//创建NIOSocketChannel成功后，在进行初始化时，将它的ChannelHandler设置到ChannelPipeline中，用于处理网络IO事件
 					@Override
 					protected void initChannel(SocketChannel arg0) throws Exception {
-						
-
 						ChannelPipeline pipeline = arg0.pipeline();
 						pipeline.addLast(new SFPDecoder());
 						pipeline.addLast(new SFPEncoder());
 						pipeline.addLast(new SFPHandler());
-						
 						
 						//支持Http协议
 						//Http请求处理的编解码器

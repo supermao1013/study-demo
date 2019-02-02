@@ -8,6 +8,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
+/**
+ * 解码器
+ */
 public class SFPDecoder extends ByteToMessageDecoder {
 	
 	@Override

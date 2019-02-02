@@ -18,9 +18,6 @@ import io.netty.handler.stream.ChunkedNioFile;
 
 /**
  * 
- * @author Five老师
- * @createTime 2018年3月25日 下午8:14:41
- * 
  */
 public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
