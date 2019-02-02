@@ -1,0 +1,67 @@
+package com.dalomao.netty.line;
+
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
+
+/**
+ * 服务端
+ *
+ * LineBasedFrameDecoder的工作原理是它一次遍历ByteBuf中的可读字节，判断看是否有“\n”或者“\r\n”， 如果有，就以此位置为结束位置，
+ * 从可读索引到结束位置区间的字节就组成了一行。它是以换行符为结束标志的解码器，支持携带结束符或者不携带结束符两种解码方式，同时支持配置单行的最大长度。
+ * 如果连续读取到最大长度后仍然没有出现换行符，就会抛出异常，同时忽略掉之前读到的异常码流
+ */
+public class TimeServer {
+
+	public static void main(String[] args) throws Exception {
+		int port=8080; //服务端默认端口
+		new TimeServer().bind(port);
+	}
+
+	public void bind(int port) throws Exception{
+		//Reactor线程组
+		//1用于服务端接受客户端的连接
+		EventLoopGroup acceptorGroup = new NioEventLoopGroup();
+		//2用于进行SocketChannel的网络读写
+		EventLoopGroup workerGroup = new NioEventLoopGroup();
+		try {
+			//Netty用于启动NIO服务器的辅助启动类
+			ServerBootstrap sb = new ServerBootstrap();
+			//将两个NIO线程组传入辅助启动类中
+			sb.group(acceptorGroup, workerGroup)
+					//设置创建的Channel为NioServerSocketChannel类型
+					.channel(NioServerSocketChannel.class)
+					//配置NioServerSocketChannel的TCP参数
+					.option(ChannelOption.SO_BACKLOG, 1024)
+					//设置绑定IO事件的处理类
+					.childHandler(new ChannelInitializer<SocketChannel>() {
+						@Override
+						protected void initChannel(SocketChannel arg0) throws Exception {
+							//处理粘包/拆包问题
+							arg0.pipeline().addLast(new LineBasedFrameDecoder(1024));
+							arg0.pipeline().addLast(new StringDecoder());
+
+							arg0.pipeline().addLast(new TimeServerHandler());
+						}
+					});
+			//绑定端口，同步等待成功（sync()：同步阻塞方法）
+			//ChannelFuture主要用于异步操作的通知回调
+			ChannelFuture cf = sb.bind(port).sync();
+
+			//等待服务端监听端口关闭
+			cf.channel().closeFuture().sync();
+		} finally {
+			//优雅退出，释放线程池资源
+			acceptorGroup.shutdownGracefully();
+			workerGroup.shutdownGracefully();
+		}
+	}
+}
+
