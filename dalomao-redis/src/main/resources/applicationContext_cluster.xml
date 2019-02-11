@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xsi:schemaLocation="  
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">  
+  
+    <!-- Spring自动将该包目录下标记为@Service的所有类作为spring的Bean -->  
+    <context:component-scan base-package="com.dalomao.redis" />
+  
+    <context:property-placeholder location="classpath:redis_cluster.properties" />
+
+    <!-- 集群相关配置 begin -->
+    <!-- jedis cluster config -->
+    <bean id="genericObjectPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+        <property name="maxTotal" value="1024" />
+        <property name="minIdle" value="8" />
+        <property name="maxIdle" value="100" />
+        <property name="maxWaitMillis" value="1000" />
+        <property name="testOnBorrow" value="true" />
+    </bean>
+    <bean id="jedisCluster" class="com.dalomao.redis.cluster.JedisClusterFactory">
+        <property name="addressConfig" value="classpath:redis_cluster.properties"/>
+        <!--代表节点地址的配置项的前缀-->
+        <property name="addressKeyPrefix" value="address" />
+        <property name="timeout" value="300000" />
+        <!--代表集群有几台redis-->
+        <property name="maxRedirections" value="6" />
+        <property name="genericObjectPoolConfig" ref="genericObjectPoolConfig" />
+    </bean>
+    <!-- 集群相关配置 end -->
+</beans>
