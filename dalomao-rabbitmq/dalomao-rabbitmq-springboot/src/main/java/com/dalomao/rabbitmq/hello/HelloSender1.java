@@ -15,7 +15,7 @@ public class HelloSender1 {
     private AmqpTemplate rabbitTemplate;
 
     public void send(String msg) {
-        String sendMsg = msg +"---"+ System.currentTimeMillis();;
+        String sendMsg = msg +"---"+ System.currentTimeMillis();
         System.out.println("Sender : " + sendMsg);
         this.rabbitTemplate.convertAndSend(RmConst.QUEUE_HELLO, sendMsg);
     }

@@ -20,9 +20,9 @@
 	<!-- rabbitMQ配置 -->
 	<bean id="rabbitConnectionFactory"
 		  class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
-		<constructor-arg value="10.8.206.47"/>
-		<property name="username" value="dalomao"/>
-		<property name="password" value="123456"/>
+		<constructor-arg value="127.0.0.1"/>
+		<property name="username" value="guest"/>
+		<property name="password" value="guest"/>
 		<property name="channelCacheSize" value="8"/>
 		<property name="port" value="5672"></property>
 	</bean>

@@ -11,6 +11,6 @@ import org.springframework.amqp.core.MessageListener;
 public class H3Service implements MessageListener{
     private Logger logger = LoggerFactory.getLogger(H3Service.class);
     public void onMessage(Message message) {
-        logger.info("Get message:"+new String(message.getBody()));
+        logger.info("H3Service Get message:"+new String(message.getBody()));
     }
 }
