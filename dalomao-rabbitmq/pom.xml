@@ -11,6 +11,7 @@
     <modules>
         <module>dalomao-rabbitmq-spring</module>
         <module>dalomao-rabbitmq-springboot</module>
+        <module>dalomao-rabbitmq-native</module>
     </modules>
 
     <properties>
