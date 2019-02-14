@@ -15,6 +15,9 @@ import org.apache.curator.framework.recipes.cache.TreeCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
+/**
+ * 模拟场景-master节点选举
+ */
 public class ZkTomcatValve extends ValveBase {
 
 	private static CuratorFramework client;
@@ -24,7 +27,7 @@ public class ZkTomcatValve extends ValveBase {
 
 	@Override
 	public void invoke(Request request, Response response) throws IOException, ServletException {
-		client = CuratorFrameworkFactory.builder().connectString("192.168.56.101:2181").connectionTimeoutMs(1000)
+		client = CuratorFrameworkFactory.builder().connectString("127.0.0.1:2181").connectionTimeoutMs(1000)
 				.retryPolicy(new ExponentialBackoffRetry(1000, 3)).build();
 		client.start();
 

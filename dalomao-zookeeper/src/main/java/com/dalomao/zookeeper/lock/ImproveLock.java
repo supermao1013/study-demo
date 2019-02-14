@@ -13,10 +13,16 @@ import org.I0Itec.zkclient.serialize.SerializableSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * zk实现分布式锁改进版，使用时每个线程都要new一个新对象
+ * 规则：利用zk临时顺序节点，每一个线程都去创建临时顺序节点（递增），然后获取所有节点并排序，如果当前自己创建
+ * 		的节点在所有节点中排第一个，说明获取到锁。剩余的线程就监听前一个节点删除的事件
+ * 优点：公平锁，每一个线程排队获取锁，每一个线程只监听前一个线程释放锁的事件
+ */
 public class ImproveLock implements Lock {
 	private static Logger logger = LoggerFactory.getLogger(ImproveLock.class);
 
-	private static final String ZOOKEEPER_IP_PORT = "192.168.1.129:2181";
+	private static final String ZOOKEEPER_IP_PORT = "127.0.0.1:2181";
 	private static final String LOCK_PATH = "/LOCK";
 
 	private ZkClient client = new ZkClient(ZOOKEEPER_IP_PORT, 1000, 1000, new SerializableSerializer());

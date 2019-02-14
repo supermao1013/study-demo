@@ -11,10 +11,15 @@ import org.I0Itec.zkclient.exception.ZkNodeExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * zk实现分布式锁，使用时每个线程都要new一个新对象
+ * 规则：每个线程都去创建一个节点，谁创建成功谁就获取锁，剩下的线程等待获取锁的线程释放锁
+ * 缺点：当锁释放后，剩余所有需要锁的线程再次进行锁竞争
+ */
 public class DistributeLock implements Lock {
 	private static Logger logger = LoggerFactory.getLogger(DistributeLock.class);
 
-	private static final String ZK_IP_PORT = "192.168.1.129:2181";
+	private static final String ZK_IP_PORT = "127.0.0.1:2181";
 	private static final String LOCK_NODE = "/lock";
 
 	private ZkClient client = new ZkClient(ZK_IP_PORT);
@@ -31,7 +36,7 @@ public class DistributeLock implements Lock {
 		lock();
 	}
 
-	// 阻塞时的实现
+	// 阻塞的实现
 	private void waitForLock() {
 		// 给节点加监听
 		IZkDataListener listener = new IZkDataListener() {
