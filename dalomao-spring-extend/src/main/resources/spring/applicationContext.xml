@@ -54,5 +54,46 @@
         <bean id="myBeanNameAware" class="com.dalomao.spring.extend.aware.MyBeanNameAware"/>
         <!-- BeanFactoryAware测试 -->
         <bean class="com.dalomao.spring.extend.aware.MyBeanFactoryAware"/>
+
+        <bean id="myaspectj" class="com.dalomao.spring.extend.aop.xmlaop.AopAspectj"></bean>
+        <bean id="myintroduction" class="com.dalomao.spring.extend.aop.xmlaop.IntroductionClass"></bean>
+        <bean id="myservice" class="com.dalomao.spring.extend.aop.xmlaop.MyServiceImpl"></bean>
+
+        <!--
+            <aop:pointcut>：用来定义切入点，该切入点可以重用；
+            <aop:advisor>：用来定义只有一个通知和一个切入点的切面；
+            <aop:aspect>：用来定义切面，该切面可以包含多个切入点和通知，而且标签内部的通知和切入点定义是无序的；和advisor的区别就在此，advisor只包含一个通知和一个切入点。
+        -->
+        <aop:config proxy-target-class="true">
+            <!-- <aop:pointcut >在此处定义的pointcut是全局的pointcut，可以供所有的aspect使用
+                    id:表示这个pointcut的名称，以方便使用-->
+            <aop:pointcut id="myMethods" expression="execution(public * com.dalomao.spring.extend.aop.xmlaop..*.*(..))" />
+            <!-- <aop:aspect>表示定义一个切面类(这需要Spring初始化加入其管理)
+                    id:切面类的名称，
+                    ref:引用哪个bean(需要使用<bean>标签初始化)-->
+            <aop:aspect id="txAspect" ref="myaspectj">
+                <!-- declare-parents 为types-matching中的类（用proxy表示）指定了一个父类，
+                     然后又指定了此父类为接口implement-interface，并指出此父类的一个默认实现类delegate-ref -->
+                <!-- 这个运用的是：属于代理模式中的静态代理，作用就是通过myintroduction代理了MyServiceImpl -->
+                <aop:declare-parents types-matching="com.dalomao.spring.extend.aop.xmlaop.MyServiceImpl"
+                                     implement-interface="com.dalomao.spring.extend.aop.xmlaop.IntroductionIntf"
+                                     delegate-ref="myintroduction"/>
+                <!-- 在此处定义的pointcut是局部的pointcut只供当前的aspect使用
+                     id:表示这个pointcut的名称，以方便使用 -->
+                <aop:pointcut id="myMethod2" expression="execution(public * com.dalomao.spring.extend.aop.xmlaop..*.*(..))" />
+
+                <!--
+                    定义advice时的参数
+                    method:切面逻辑的方法名称(切面类中的方法名)
+                    pointcut-ref：表示引用哪个pointcut(要求已经在上面定义好了)
+                    pointcut：定义一个pointcut    -->
+                <aop:before method="before" pointcut-ref="myMethods"/>
+                <aop:after-returning method="afterReturning" pointcut="execution(public * com.dalomao.spring.extend.aop.xmlaop..*.*(..))"/>
+                <aop:after method="after" pointcut-ref="myMethod2"/>
+                <aop:after-throwing method="afterthrowing" pointcut-ref="myMethods"/>
+                <aop:around method="around" pointcut-ref="myMethod2"/>
+                <aop:before method="before" pointcut-ref="myMethods"/>
+            </aop:aspect>
+        </aop:config>
     </beans>
 </beans>
