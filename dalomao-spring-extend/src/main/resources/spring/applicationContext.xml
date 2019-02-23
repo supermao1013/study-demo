@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 父容器不扫描@Controller，留给子容器SpringMVC扫描 -->
+    <context:component-scan base-package="com.dalomao.spring.extend" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
+    <beans>
+        <!-- BeanFactoryPostProcessor扩展测试 -->
+        <bean id="beanFactoryPostProcessorVO" class="com.dalomao.spring.extend.factorypostprocessor.BeanFactoryPostProcessorVO">
+            <property name="userName" value="dalomao"/>
+            <property name="age" value="30"/>
+        </bean>
+        <bean class="com.dalomao.spring.extend.factorypostprocessor.MyBeanFactoryPostProcessor" />
+
+        <!-- BeanDefinitionRegistryPostProcessor扩展测试 -->
+        <bean class="com.dalomao.spring.extend.registrypostprocessor.MyBeanDefinitionRegistryPostProcessor1" />
+        <bean class="com.dalomao.spring.extend.registrypostprocessor.MyBeanDefinitionRegistryPostProcessor2" />
+        <bean class="com.dalomao.spring.extend.registrypostprocessor.MyBeanDefinitionRegistryPostProcessor3" />
+        <bean class="com.dalomao.spring.extend.registrypostprocessor.MyBeanDefinitionRegistryPostProcessor4" />
+
+        <!-- BeanPostProcessor测试 -->
+        <bean class="com.dalomao.spring.extend.postprocessor.MyBeanPostProcessor1" />
+        <bean class="com.dalomao.spring.extend.postprocessor.MyBeanPostProcessor2" />
+
+        <!-- ApplicationListener|ApplicationEvent测试 -->
+        <bean class="com.dalomao.spring.extend.listenersync.MyListener1" />
+        <bean class="com.dalomao.spring.extend.listenersync.MyListener2" />
+
+        <!-- InitializingBean测试 -->
+        <bean class="com.dalomao.spring.extend.initbean.MyInitializingBean" />
+
+        <!-- ApplicationcontextAware测试 -->
+        <bean class="com.dalomao.spring.extend.aware.MyApplicationcontextAware"/>
+        <!-- EnvironmentAware测试 -->
+        <bean class="com.dalomao.spring.extend.aware.MyEnvironmentAware"/>
+        <!-- BeanNameAware测试 -->
+        <bean id="myBeanNameAware" class="com.dalomao.spring.extend.aware.MyBeanNameAware"/>
+        <!-- BeanFactoryAware测试 -->
+        <bean class="com.dalomao.spring.extend.aware.MyBeanFactoryAware"/>
+    </beans>
+</beans>
