@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans 
+	   	http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+	   	http://www.springframework.org/schema/tx
+	   	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<description>数据源配置</description>
+
+	<context:property-placeholder location="classpath:demo.properties" />
+
+	<!-- id表示数据源ID，用于启动的时候具体选择哪一个数据源(启动的时候就选择好了)，但不适用于动态切换数据源 -->
+	<bean id="mysql" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClassName}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="user" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<property name="minPoolSize" value="10" />
+		<property name="maxPoolSize" value="100" />
+		<property name="maxIdleTime" value="1800" />
+		<property name="acquireIncrement" value="3" />
+		<property name="maxStatements" value="1000" />
+		<property name="initialPoolSize" value="10" />
+		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="acquireRetryAttempts" value="30" />
+		<property name="breakAfterAcquireFailure" value="false" />
+		<property name="testConnectionOnCheckout" value="false" />
+		<property name="acquireRetryDelay" value="100"/>
+	</bean>
+
+	<bean id="mysql2" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc2.driverClassName}"/>
+		<property name="jdbcUrl" value="${jdbc2.url}"/>
+		<property name="user" value="${jdbc2.username}"/>
+		<property name="password" value="${jdbc2.password}"/>
+		<property name="minPoolSize" value="10" />
+		<property name="maxPoolSize" value="100" />
+		<property name="maxIdleTime" value="1800" />
+		<property name="acquireIncrement" value="3" />
+		<property name="maxStatements" value="1000" />
+		<property name="initialPoolSize" value="10" />
+		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="acquireRetryAttempts" value="30" />
+		<property name="breakAfterAcquireFailure" value="false" />
+		<property name="testConnectionOnCheckout" value="false" />
+		<property name="acquireRetryDelay" value="100"/>
+	</bean>
+
+	<!-- mybatis多厂商数据库支持 -->
+	<bean id="vendorProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="MySQL">mysql</prop>
+				<prop key="MySQL2">mysql2</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="databaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+		<property name="properties" ref="vendorProperties" />
+	</bean>
+
+	<!-- sqlSession工厂类 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="${dataSource}" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:com/dalomao/mybatis/**/*Mapper.xml</value>
+			</list>
+		</property>
+		<property name="databaseIdProvider" ref="databaseIdProvider" />
+		<!--
+			自定义插件，即拦截器
+		 	Mybatis拦截器只能拦截四种类型的接口：Executor、StatementHandler、ParameterHandler和ResultSetHandler
+		 -->
+		<property name="plugins">
+			<array>
+				<bean class="com.dalomao.mybatis.extend.plugin.ExectorInterceptor"/>
+				<bean class="com.dalomao.mybatis.extend.plugin.PageInterceptor"/>
+				<bean class="com.dalomao.mybatis.extend.plugin.ResultSetCacheInterceptor"/>
+			</array>
+		</property>
+	</bean>
+
+	<!-- Mapper扫描类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="annotationClass" value="org.springframework.stereotype.Repository"/>
+		<property name="basePackage" value="com.dalomao.demo"/>
+		<!--这样会导致property-placeholder加载配置文件失效
+			<property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+	</bean>
+
+	<!-- 事务管理 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="${dataSource}"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
