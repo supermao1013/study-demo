@@ -1812,7 +1812,15 @@ public class JedisUtils {
 
     public static void main(String[] args) {
         JedisUtils.set("name", "zhangsan");
-        System.out.println(JedisUtils.get("name"));
+        System.out.println(JedisUtils.keys("usr:1:*:3:4:*"));
+
+        Jedis jedis = pool.getResource();
+        ScanParams scanParams = new ScanParams();
+        scanParams.match("usr:*:2:*:*:*");
+        ScanResult<String> scan = jedis.scan("0", scanParams);
+        System.out.println("scan：返回用于下次遍历的游标"+scan.getStringCursor());
+        System.out.println("scan：返回结果"+scan.getResult());
+
 //        System.out.println(JedisUtils.setrange("name", 1, "ma"));
 //        System.out.println(JedisUtils.mget("name", "person", "age"));
 //        JedisUtils.mset(new String[]{"sex", "男", "title", "工程师"});
