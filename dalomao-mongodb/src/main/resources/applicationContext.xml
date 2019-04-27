@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xmlns:context="http://www.springframework.org/schema/context"
+		  xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+		  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+	<!-- <context:property-placeholder location="classpath:/com/myapp/mongodb/config/mongo.properties" 
+		/> -->
+
+	<context:component-scan base-package="com.dalomao.mongodb"/>
+
+	<!-- mongodb连接池配置 -->
+	<!-- spring 1.x版本生成的mongo-client实际上为Mongo，而不是MongoClient -->
+	<mongo:mongo-client host="192.168.31.41" port="27017" id="mongo">
+		<mongo:client-options 
+		      write-concern="ACKNOWLEDGED"
+		      connections-per-host="100"
+		      threads-allowed-to-block-for-connection-multiplier="5"
+		      max-wait-time="120000"
+			  connect-timeout="10000"/> 
+	</mongo:mongo-client>
+	
+	<!-- mongodb数据库工厂配置，指定哪个库 -->
+	<mongo:db-factory dbname="maohw" mongo-ref="mongo" />
+	
+ 	<mongo:mapping-converter base-package="com.dalomao.mongodb.quickstart.entity">
+		<!-- 编解码器 -->
+		<!-- spring 1.x版本没有提供对mongo decemal128数据默认的支持，所以需要自定义转换器进行转换 -->
+		<mongo:custom-converters>
+		  <mongo:converter>
+			<bean class="com.dalomao.mongodb.quickstart.convert.BigDecimalToDecimal128Converter"/>
+		  </mongo:converter>
+		  <mongo:converter>
+			<bean class="com.dalomao.mongodb.quickstart.convert.Decimal128ToBigDecimalConverter"/>
+		  </mongo:converter>
+		</mongo:custom-converters>
+	</mongo:mapping-converter>
+
+    <!-- mongodb模板 -->
+	<bean id="anotherMongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+		  <constructor-arg name="mongoConverter" ref="mappingConverter"/>
+		<property name="writeResultChecking" value="EXCEPTION"></property>
+	</bean>
+
+
+
+</beans>
