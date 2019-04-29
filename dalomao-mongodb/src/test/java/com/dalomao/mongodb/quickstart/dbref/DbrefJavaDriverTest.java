@@ -6,9 +6,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,14 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Projections.*;
 
 //原生java驱动
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class DbrefavaDriverTest {
+public class DbrefJavaDriverTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(DbrefavaDriverTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(DbrefJavaDriverTest.class);
 
 	private MongoDatabase db;
 
