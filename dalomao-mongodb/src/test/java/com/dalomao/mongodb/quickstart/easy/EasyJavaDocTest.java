@@ -20,7 +20,11 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.util.*;
 
-//原生java驱动 document的操作方式
+/**
+ * 原生java驱动 document的操作方式
+ *
+ * 测试本类请使用测试文件：data/1.测试数据users.txt
+ */
 public class EasyJavaDocTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(EasyJavaDocTest.class);

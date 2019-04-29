@@ -20,7 +20,11 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-//spring Pojo的操作方式
+/**
+ * spring驱动 pojo操作
+ *
+ * 测试本类请使用测试文件：data/1.测试数据users.txt
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class EasySpringPojoTest {

@@ -24,7 +24,11 @@ import java.util.List;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.*;
 
-//原生java驱动
+/**
+ * 原生java驱动
+ *
+ * 测试本类请使用测试文件：data/2.测试数据users2-内嵌comments.txt
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class CommentJavaDriverTest {

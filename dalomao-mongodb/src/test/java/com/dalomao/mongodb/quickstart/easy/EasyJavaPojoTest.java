@@ -30,7 +30,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//原生java驱动 Pojo的操作方式
+/**
+ * 原生java驱动 pojo的操作方式
+ *
+ * 测试本类请使用测试文件：data/1.测试数据users.txt
+ */
 public class EasyJavaPojoTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(EasyJavaPojoTest.class);

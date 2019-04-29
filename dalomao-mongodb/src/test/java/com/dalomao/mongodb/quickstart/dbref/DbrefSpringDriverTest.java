@@ -13,7 +13,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import java.util.List;
 
-//spring驱动
+/**
+ * spring驱动
+ *
+ * 测试本类请使用测试文件：data/3.测试数据user3-DBRef查询comments.txt
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class DbrefSpringDriverTest {
@@ -30,7 +34,6 @@ public class DbrefSpringDriverTest {
 		System.out.println("----------------------------");
 		System.out.println(users);
 		System.out.println("----------------------------");
-//		System.out.println(users.get(0).getComments());
 	}
 
 }

@@ -21,7 +21,11 @@ import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
-//原生java驱动
+/**
+ * 原生java驱动
+ *
+ * 测试本类请使用测试文件：data/3.测试数据user3-DBRef查询comments.txt
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class DbrefJavaDriverTest {

@@ -17,7 +17,11 @@ import java.util.List;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-//spring驱动
+/**
+ * spring驱动
+ *
+ * 测试本类请使用测试文件：data/2.测试数据users2-内嵌comments.txt
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class CommentSpringDriverTest {

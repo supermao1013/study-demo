@@ -1,24 +1,12 @@
 package com.dalomao.mongodb.quickstart.aggregate;
 
 
-import static com.mongodb.client.model.Filters.*;
-import static com.mongodb.client.model.Projections.*;
-import static com.mongodb.client.model.Sorts.*;
-import static com.mongodb.client.model.Aggregates.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.bson.BSON;
-import org.bson.BsonDocument;
+import com.mongodb.Block;
+import com.mongodb.MongoClient;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.bson.codecs.configuration.CodecRegistries;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,21 +16,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.mongodb.Block;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.ServerAddress;
-import com.mongodb.WriteConcern;
-import com.mongodb.client.AggregateIterable;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Projections;
-import com.mongodb.client.model.PushOptions;
-import com.mongodb.client.model.Updates;
-import com.mongodb.client.result.UpdateResult;
-import com.mongodb.operation.OrderBy;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.mongodb.client.model.Aggregates.*;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
+import static com.mongodb.client.model.Sorts.ascending;
+import static com.mongodb.client.model.Sorts.orderBy;
 
 /**
  * 原生java驱动
