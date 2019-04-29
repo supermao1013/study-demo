@@ -26,6 +26,8 @@ spring：4.3.13.RELEASE
 
 * 若评论过多，导致单个bson文档最大不能超过16M，则可以使用Mongo自带的DBRef功能分集合存储，进行联合查询（一般做法是自定义ID关联，比较灵活可控）
 
+* 聚合功能的使用，在面对复杂的查询，如分组、排序等，应该使用聚合查询【重要且常用】
+
 # 测试数据
 
 * easy包测试请使用：data/1.测试数据users.txt
@@ -34,3 +36,4 @@ spring：4.3.13.RELEASE
 
 * dbref包测试请使用：data/3.测试数据user3-DBRef查询comments.txt（注意：需要先生成comments集合，然后取其中一个文档的ID赋值给user1）
 
+* aggregate包测试请使用：data/2.测试数据users2-内嵌comments.txt
