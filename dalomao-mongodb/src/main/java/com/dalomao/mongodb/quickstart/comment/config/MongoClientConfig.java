@@ -1,11 +1,10 @@
 package com.dalomao.mongodb.quickstart.comment.config;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.ServerAddress;
-import com.mongodb.WriteConcern;
+import com.mongodb.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Arrays;
 
 @Configuration
 public class MongoClientConfig {
@@ -16,6 +15,8 @@ public class MongoClientConfig {
      */
 	@Bean
 	public MongoClient mongoClient() {
+
+
 		MongoClientOptions mco = MongoClientOptions.builder()
 				.writeConcern(WriteConcern.ACKNOWLEDGED)
 				.connectionsPerHost(100)
@@ -24,6 +25,11 @@ public class MongoClientConfig {
 
 	   MongoClient client = new MongoClient(new ServerAddress("192.168.31.41", 27017), mco);
 
+	   /**
+		密码方式配置：
+		MongoCredential createCredential = MongoCredential.createCredential("maohw", "maohw", "123456".toCharArray());
+		MongoClient client = new MongoClient(new ServerAddress("192.168.31.41", 27017), Arrays.asList(createCredential), mco);
+		*/
 	   return client;
 	}
 }

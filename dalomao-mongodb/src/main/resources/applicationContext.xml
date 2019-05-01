@@ -14,6 +14,10 @@
 
 	<!-- mongodb连接池配置 -->
 	<!-- spring 1.x版本生成的mongo-client实际上为Mongo，而不是MongoClient -->
+	<!--
+		密码方式配置：
+	 	<mongo:mongo-client host="192.168.1.142" port="27022" credentials="maohw:123456@maohw">
+	 -->
 	<mongo:mongo-client host="192.168.31.41" port="27017" id="mongo">
 		<mongo:client-options 
 		      write-concern="ACKNOWLEDGED"
