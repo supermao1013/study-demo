@@ -28,6 +28,8 @@ spring：4.3.13.RELEASE
 
 * 聚合功能的使用，在面对复杂的查询，如分组、排序等，应该使用聚合查询【重要且常用】
 
+* 更新功能，特别是文档内部针对数组的更新
+
 # 测试数据
 
 * easy包测试请使用：data/1.测试数据users.txt
@@ -37,3 +39,5 @@ spring：4.3.13.RELEASE
 * dbref包测试请使用：data/3.测试数据user3-DBRef查询comments.txt（注意：需要先生成comments集合，然后取其中一个文档的ID赋值给user1）
 
 * aggregate包测试请使用：data/2.测试数据users2-内嵌comments.txt
+
+* update包测试请使用：data/2.测试数据users2-内嵌comments.txt
