@@ -30,6 +30,8 @@ spring：4.3.13.RELEASE
 
 * 更新功能，特别是文档内部针对数组的更新
 
+* 数据构造，用来模拟索引慢查询场景
+
 # 测试数据
 
 * easy包测试请使用：data/1.测试数据users.txt
@@ -41,3 +43,5 @@ spring：4.3.13.RELEASE
 * aggregate包测试请使用：data/2.测试数据users2-内嵌comments.txt
 
 * update包测试请使用：data/2.测试数据users2-内嵌comments.txt
+
+* index包：主要是用来造数据进行索引慢查询优化用
