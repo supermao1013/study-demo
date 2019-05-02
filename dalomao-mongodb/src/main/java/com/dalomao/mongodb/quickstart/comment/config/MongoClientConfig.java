@@ -38,6 +38,8 @@ public class MongoClientConfig {
 
 		/**
 		 * 可复制集架构配置：
+		 * MongoDB复制集里Primary节点是不固定的,不固定的,不固定的！所以生产环境千万不要直连Primary,千万不要直连Primary,千万不要直连Primary！
+		 * 在options里添加readPreference=secondaryPreferred即可实现读写分离,读请求优先到Secondary节点,从而实现读写分离的功能
 
 		 List<ServerAddress> asList = Arrays.asList(
 				new ServerAddress("192.168.1.142", 27018),
