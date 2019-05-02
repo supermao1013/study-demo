@@ -18,6 +18,10 @@
 		密码方式配置：
 	 	<mongo:mongo-client host="192.168.1.142" port="27022" credentials="maohw:123456@maohw">
 	 -->
+	<!--
+		可复制集架构配置：
+		<mongo:mongo-client id="mongo" replica-set="192.168.1.142:27017,192.168.1.142:27018,192.168.1.142:27017">
+	-->
 	<mongo:mongo-client host="192.168.31.41" port="27017" id="mongo">
 		<mongo:client-options 
 		      write-concern="ACKNOWLEDGED"
