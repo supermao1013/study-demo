@@ -4,6 +4,7 @@
 ## 子项目
 * **dalomao-design-mode**：设计模式的一些例子
 * **dalomao-id-generate**：在单机、分布式的高并发环境下，生成主键ID的集中方式
+* **dalomao-kafka**：kafka的快速入门
 * **dalomao-mongodb**：Mongodb的快速入门
 * **dalomao-mybatis-extend**：mybatis的扩展使用，包括自定义缓存插件、分页插件等
 * **dalomao-netty-im**：使用netty开发一个简易的web端聊天室，支持websocket
