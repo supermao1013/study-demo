@@ -3,6 +3,7 @@
 
 ## 子项目
 * **dalomao-design-mode**：设计模式的一些例子
+* **dalomao-docpdf**：doc转pdf
 * **dalomao-id-generate**：在单机、分布式的高并发环境下，生成主键ID的集中方式
 * **dalomao-jvm**：书籍-深入理解Java虚拟机第二版 中的相关学习代码
 * **dalomao-kafka**：kafka的快速入门
