@@ -60,7 +60,7 @@
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
       <artifactId>zookeeper</artifactId>
-      <version>3.4.10</version>
+      <version>3.4.14</version>
     </dependency>
     <!-- 开源的zk客户端，在原生API基础上封装，是一个更易于使用的zookeeper客户端 -->
     <dependency>
