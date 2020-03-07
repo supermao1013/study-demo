@@ -10,6 +10,7 @@ public class IsAliveDemo {
         MyThread myThread = isAliveDemo.new MyThread();
         System.out.println("begin == "+myThread.isAlive());
         myThread.start();
+        myThread.join();
         System.out.println("end == "+myThread.isAlive());
     }
 
