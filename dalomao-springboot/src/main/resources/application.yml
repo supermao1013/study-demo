@@ -1,0 +1,48 @@
+server:
+  servlet:
+    context-path: /
+  port: 80
+
+spring:
+  datasource:
+    # druid连接池配置，官网 https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter
+    druid:
+      url: jdbc:mysql://192.168.3.41:3306/dalomao-springboot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+      username: root
+      password: 123456
+      initial-size: 10 # 初始连接数
+      min-idle: 10  # 最小连接数
+      max-active: 20  # 最大连接数
+      max-wait: 60000 # 获取连接等待超时的时间（毫秒）
+      time-between-eviction-runs-millis: 60000  # 配置间隔多久进行一次检测，检测需要关闭的空闲连接（毫秒）
+      min-evictable-idle-time-millis: 300000  # 配置一个连接在池中最小生存的时间（毫秒）
+      validation-query: SELECT 1 FROM DUAL  # 配置心跳检测方式
+      test-while-idle: true
+      test-on-borrow: false # 申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false # 归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      stat-view-servlet:
+        enabled: true # 开启监控，允许界面访问
+        allow: # 白名单设置，不填则允许所有访问
+        url-pattern: /druid/* # 界面访问地址
+        reset-enable: false # 禁止手动重置监控数据
+        login-username: root  # 设置监控界面的账号密码，默认没有
+        login-password: 123456
+      web-stat-filter:
+        enabled: true # 是否启用StatFilter默认值false
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      use-global-data-source-stat: true # 合并多个DruidDataSource的监控数据
+      filter:
+        stat: # 配置StatFilter，记录慢sql
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 2000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 优化sql日志，生产环境禁止此配置
+  mapper-locations: classpath:com/dalomao/springboot/**/*Mapper.xml

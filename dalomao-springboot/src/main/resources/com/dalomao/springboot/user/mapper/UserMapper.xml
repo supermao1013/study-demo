@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dalomao.springboot.user.dao.UserDao">
+
+   <select id="selectPageSelf" resultType="com.dalomao.springboot.user.entity.UserEntity">
+       SELECT * FROM t_sys_user u
+       WHERE u.del_flag = '0'
+       <if test="vo.status != null and vo.status != ''">
+           AND u.status = #{vo.status}
+       </if>
+       <if test="vo.loginName != null and vo.loginName != ''">
+           AND u.login_name = #{vo.loginName}
+       </if>
+       <if test="vo.beginTime != null and vo.endTime == null"><!-- 开始时间检索 -->
+           <![CDATA[ AND u.create_time >= DATE_FORMAT(#{vo.beginTime}, '%Y-%m-%d 00:00:00') ]]>
+       </if>
+       <if test="vo.beginTime == null and vo.endTime != null"><!-- 结束时间检索 -->
+           <![CDATA[ AND u.create_time <= DATE_FORMAT(#{vo.endTime}, '%Y-%m-%d 23:59:59') ]]>
+       </if>
+       <if test="vo.beginTime != null and vo.endTime != null"><!-- 结束时间检索 -->
+           AND u.create_time BETWEEN DATE_FORMAT(#{vo.beginTime}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{vo.endTime}, '%Y-%m-%d 23:59:59')
+       </if>
+       ORDER BY u.create_time desc
+   </select>
+
+</mapper>
